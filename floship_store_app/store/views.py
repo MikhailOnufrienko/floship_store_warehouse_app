@@ -1,9 +1,14 @@
-from rest_framework import viewsets
+from rest_framework import generics
 
-from .serializers import OrderSerializer
+from .serializers import OrderSerializer, OrderUpdateSerializer
 from .models import Order
 
 
-class OrderViewSet(viewsets.ModelViewSet):
-    serializer_class = OrderSerializer
+class UpdateOrderView(generics.UpdateAPIView):
+    serializer_class = OrderUpdateSerializer
     queryset = Order.objects.all()
+
+    def get_serializer(self, *args, **kwargs):
+        kwargs['partial'] = True
+        return super().get_serializer(*args, **kwargs)
+    

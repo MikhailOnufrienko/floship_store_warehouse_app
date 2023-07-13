@@ -5,26 +5,28 @@ from django.dispatch import receiver
 import requests
 
 from .models import Order
-from .serializers import OrderSerializer
+from .serializers import OrderSerializer, OrderUpdateSerializer
 from .utils import authenticate_user, get_csrf_token, get_user
 from .utils import csrf_token
 
 
 @receiver(post_save, sender=Order)
-def create_order_in_warehouse(sender, instance, created, **kwargs):
-    if created:
+def update_order_in_store(sender, instance, created, **kwargs):
+    if not created:
+        print('Этот код выполняется')
         order = OrderSerializer(instance).data
+        order_id = order.get('id')
         json_order = json.dumps(order)
         global csrf_token
         if not csrf_token:
             csrf_token = get_csrf_token()
             user = get_user()
             authenticate_user(user, csrf_token)
-        response = requests.post(
-            'http://127.0.0.1:8002/api/order/',
+        response = requests.patch(
+            f'http://127.0.0.1:8001/api/order/{order_id}/',
             data=json_order,
             cookies={'csrftoken': csrf_token},
             headers={'Content-Type': 'application/json'}
         )
-        print(response.status_code)
-        print(response.text)
+        print("Статус: ", response.status_code)
+        print("Ответ: ", response.text)

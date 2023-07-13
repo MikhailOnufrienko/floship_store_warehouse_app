@@ -9,6 +9,8 @@ class Settings(BaseSettings):
     STORE_DB_USER: str
     STORE_DB_PASSWORD: str
     STORE_DB_NAME: str = 'store_db'
+    WAREHOUSE_USERNAME: str  # used when we request
+    WAREHOUSE_PASSWORD: str  # warehouse app via API
 
     class Config:
         env_file = '.env'

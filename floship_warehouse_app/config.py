@@ -9,6 +9,8 @@ class Settings(BaseSettings):
     WAREHOUSE_DB_USER: str
     WAREHOUSE_DB_PASSWORD: str
     WAREHOUSE_DB_NAME: str = 'warehouse_db'
+    STORE_USERNAME: str
+    STORE_PASSWORD: str
 
     class Config:
         env_file = '.env'

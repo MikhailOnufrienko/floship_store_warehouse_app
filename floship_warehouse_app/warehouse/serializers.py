@@ -6,4 +6,10 @@ from .models import Order
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ['id', 'status', 'warehouse', 'creation_dt']
+        fields = '__all__'
+        
+
+class OrderUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['status']
