@@ -4,5 +4,5 @@ from store.views import UpdateOrderView
 
 
 urlpatterns = [
-    path('order/<int:pk>/', UpdateOrderView.as_view()),
+    path('order/<int:pk>/update/', UpdateOrderView.as_view()),
 ]

@@ -1,6 +1,6 @@
 import requests
 
-from .schemas import UserAuthenticationRequest
+from shared_utils.schemas import UserAuthenticationRequest
 from floship_store_app.config import project_settings 
 
 

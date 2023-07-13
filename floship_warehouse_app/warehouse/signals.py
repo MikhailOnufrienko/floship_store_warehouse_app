@@ -23,7 +23,7 @@ def update_order_in_store(sender, instance, created, **kwargs):
             user = get_user()
             authenticate_user(user, csrf_token)
         response = requests.patch(
-            f'http://127.0.0.1:8001/api/order/{order_id}/',
+            f'http://127.0.0.1:8001/api/order/{order_id}/update/',
             data=json_order,
             cookies={'csrftoken': csrf_token},
             headers={'Content-Type': 'application/json'}
