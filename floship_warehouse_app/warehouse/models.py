@@ -25,6 +25,7 @@ class Order(models.Model):
         db_table = "warehouse\".\"order"
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
+
     
     def __str__(self):
         return f'Заказ №{self.id}'

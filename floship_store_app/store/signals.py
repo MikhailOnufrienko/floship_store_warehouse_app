@@ -1,8 +1,8 @@
 import json
 
+import requests
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-import requests
 
 from .models import Order
 from .serializers import OrderSerializer
@@ -26,5 +26,4 @@ def create_order_in_warehouse(sender, instance, created, **kwargs):
             cookies={'csrftoken': csrf_token},
             headers={'Content-Type': 'application/json'}
         )
-        print(response.status_code)
-        print(response.text)
+        return response.text
