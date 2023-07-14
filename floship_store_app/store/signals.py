@@ -1,4 +1,5 @@
 import json
+import logging
 
 import requests
 from django.db.models.signals import post_save
@@ -13,7 +14,11 @@ from project_config import project_settings
 
 APP_NAME = project_settings.STORE_APP_NAME
 
+OTHER_APP_NAME = project_settings.WAREHOUSE_APP_NAME
+
 OTHER_APP_PORT = project_settings.WAREHOUSE_APP_PORT
+
+logger = logging.getLogger(__name__)
 
 
 @receiver(post_save, sender=Order)
@@ -32,4 +37,5 @@ def create_order_in_warehouse(sender, instance, created, **kwargs):
             cookies={'csrftoken': csrf_token},
             headers={'Content-Type': 'application/json'}
         )
-        return response.text
+        if response.status_code == 201:
+            logger.info(f'Заказ {response.json().get("id")} создан в приложении {OTHER_APP_NAME}.')

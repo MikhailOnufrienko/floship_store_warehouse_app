@@ -30,8 +30,8 @@ class Settings(BaseSettings):
     WAREHOUSE_APP_NAME: str = 'warehouse'
 
     class Config:
-        env_file='.env'
-        env_file_encoding='utf-8'
+        env_file = '.env'
+        env_file_encoding = 'utf-8'
 
 
 project_settings = Settings()
