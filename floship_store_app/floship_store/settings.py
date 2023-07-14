@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from floship_store_app.config import project_settings
+from project_config import project_settings
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 

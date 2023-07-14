@@ -6,8 +6,14 @@ from django.dispatch import receiver
 
 from .models import Order
 from .serializers import OrderSerializer
-from .utils import authenticate_user, get_csrf_token, get_user
-from .utils import csrf_token
+from shared_utils.utils import authenticate_user, get_csrf_token, get_user
+from shared_utils.utils import csrf_token
+from project_config import project_settings
+
+
+APP_NAME = project_settings.WAREHOUSE_APP_NAME
+
+OTHER_APP_PORT = project_settings.STORE_APP_PORT
 
 
 @receiver(post_save, sender=Order)
@@ -18,11 +24,11 @@ def update_order_in_store(sender, instance, created, **kwargs):
         json_order = json.dumps(order)
         global csrf_token
         if not csrf_token:
-            csrf_token = get_csrf_token()
-            user = get_user()
-            authenticate_user(user, csrf_token)
+            csrf_token = get_csrf_token(OTHER_APP_PORT)
+            user = get_user(APP_NAME)
+            authenticate_user(user, csrf_token, OTHER_APP_PORT)
         response = requests.patch(
-            f'http://127.0.0.1:8001/api/order/{order_id}/update/',
+            f'http://127.0.0.1:{OTHER_APP_PORT}/api/order/{order_id}/update/',
             data=json_order,
             cookies={'csrftoken': csrf_token},
             headers={'Content-Type': 'application/json'}
