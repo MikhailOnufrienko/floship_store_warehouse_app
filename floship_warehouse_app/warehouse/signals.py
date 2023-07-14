@@ -7,9 +7,9 @@ from django.dispatch import receiver
 
 from .models import Order
 from .serializers import OrderSerializer
+from project_config import project_settings
 from shared_utils.utils import authenticate_user, get_csrf_token, get_user
 from shared_utils.utils import csrf_token
-from project_config import project_settings
 
 
 APP_NAME = project_settings.WAREHOUSE_APP_NAME
@@ -23,6 +23,8 @@ logger = logging.getLogger(__name__)
 
 @receiver(post_save, sender=Order)
 def update_order_in_store(sender, instance, created, **kwargs):
+    """A signal updating an order in the store app."""
+
     if not created:
         order = OrderSerializer(instance).data
         order_id = order.get('id')
@@ -39,6 +41,8 @@ def update_order_in_store(sender, instance, created, **kwargs):
             headers={'Content-Type': 'application/json'}
         )
         if response.status_code == 200:
-            logger.info(f'Заказ {order_id} обновлён в приложении {OTHER_APP_NAME}.')
+            logger.info(f'Заказ {order_id} обновлён '
+                        f'в приложении {OTHER_APP_NAME}.')
         if response.status_code == 404:
-            logger.info(f'Заказа {order_id} в приложении {OTHER_APP_NAME} не существует.')
+            logger.info(f'Заказа {order_id} в приложении '
+                        f'{OTHER_APP_NAME} не существует.')

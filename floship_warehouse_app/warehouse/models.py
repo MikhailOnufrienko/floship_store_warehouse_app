@@ -10,7 +10,7 @@ class Order(models.Model):
         WAREHOUSE_1 = 'Склад_1', "Склад_1"
         WAREHOUSE_2 = 'Склад_2', 'Склад_2'
 
-    id = models.IntegerField(primary_key=True)    
+    id = models.IntegerField(primary_key=True)
     status = models.TextField(
         verbose_name='Статус', choices=Statuses.choices
     )
@@ -26,6 +26,5 @@ class Order(models.Model):
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
 
-    
     def __str__(self):
         return f'Заказ №{self.id}'

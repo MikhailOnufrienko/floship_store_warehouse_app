@@ -11,10 +11,14 @@ class Order(models.Model):
         WAREHOUSE_2 = 'Склад_2', 'Склад_2'
 
     status = models.TextField(
-        verbose_name='Статус', choices=Statuses.choices, default=Statuses.CREATED
+        verbose_name='Статус',
+        choices=Statuses.choices,
+        default=Statuses.CREATED
     )
     warehouse = models.TextField(
-        verbose_name='Склад', choices=Warehouses.choices, default=Warehouses.WAREHOUSE_1
+        verbose_name='Склад',
+        choices=Warehouses.choices,
+        default=Warehouses.WAREHOUSE_1
     )
     creation_dt = models.DateTimeField(
         verbose_name='Дата и время создания', auto_now_add=True
@@ -22,11 +26,11 @@ class Order(models.Model):
     payed = models.BooleanField(
         verbose_name='Оплачен', default=False
     )
-    
+
     class Meta:
         db_table = "store\".\"order"
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
-    
+
     def __str__(self):
         return f'Заказ №{self.id}'

@@ -1,6 +1,6 @@
 from django.urls import path
 
-from store.views import UpdateOrderView
+from .views import UpdateOrderView
 
 
 urlpatterns = [

@@ -23,6 +23,8 @@ logger = logging.getLogger(__name__)
 
 @receiver(post_save, sender=Order)
 def create_order_in_warehouse(sender, instance, created, **kwargs):
+    """A signal creating an order in the warehouse app."""
+    
     if created:
         order = OrderSerializer(instance).data
         json_order = json.dumps(order)
@@ -38,4 +40,5 @@ def create_order_in_warehouse(sender, instance, created, **kwargs):
             headers={'Content-Type': 'application/json'}
         )
         if response.status_code == 201:
-            logger.info(f'Заказ {response.json().get("id")} создан в приложении {OTHER_APP_NAME}.')
+            logger.info(f'Заказ {response.json().get("id")} '
+                        f'создан в приложении {OTHER_APP_NAME}.')

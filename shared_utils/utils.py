@@ -31,15 +31,16 @@ def authenticate_user(
     if response.status_code == 200:
         logger.info('Вход в стороннее приложение выполнен.')
     if response.status_code == 400:
-        logger.info('''При попытке входа в стороннее приложение
-                    введён неверный логин или пароль.''')
+        logger.info('При попытке входа в стороннее приложение '
+                    'введён неверный логин или пароль.')
+
 
 def get_user(app_name: str) -> UserAuthenticationRequest:
     if app_name == project_settings.WAREHOUSE_APP_NAME:
         return UserAuthenticationRequest(
             username=project_settings.STORE_ADMIN_USERNAME,
             password=project_settings.STORE_ADMIN_PASSWORD
-    )
+        )
     return UserAuthenticationRequest(
         username=project_settings.WAREHOUSE_ADMIN_USERNAME,
         password=project_settings.WAREHOUSE_ADMIN_PASSWORD

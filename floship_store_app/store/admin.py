@@ -7,4 +7,3 @@ from .models import Order
 @register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Order._meta.get_fields()]
-
