@@ -1,11 +1,11 @@
 from rest_framework import generics
 
-from .serializers import OrderSerializer, OrderUpdateSerializer
+from .serializers import OrderSerializer
 from .models import Order
 
 
 class UpdateOrderView(generics.UpdateAPIView):
-    serializer_class = OrderUpdateSerializer
+    serializer_class = OrderSerializer
     queryset = Order.objects.all()
 
     def get_serializer(self, *args, **kwargs):
